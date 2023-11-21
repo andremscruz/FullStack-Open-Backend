@@ -1,8 +1,13 @@
 
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
+
+morgan.token('body', (req) => JSON.stringify(req.body))
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 const generateId = () => {
     let random = Math.floor(Math.random() * 1000);
@@ -78,16 +83,18 @@ app.get('/api/persons/:id', (request, response) => {
 //CREATES NEW RESOURCE
 app.post('/api/persons', (request, response) => {
     const body = request.body
-    const nameExists = persons.some(person => person.name === body.name);
+    const nameExists = persons.some(person => person.name === body.name)
+    const phoneExists = persons.some(person => person.number === body.number)
 
     if (!body.name || !body.number) {
         return response.status(400).json({ 
         error: 'content missing' 
         })
-    }else if (nameExists) {
+    }
+    else if (nameExists || phoneExists) {
         return response.status(400).json({
-        error: 'name must be unique'
-        });
+        error: 'name and phone must be unique'
+        })
     }
 
     const person = {
