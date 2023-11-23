@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
 require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
@@ -15,11 +17,11 @@ morgan.token('body', (req) => JSON.stringify(req.body))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 const currentDate = new Date()
-const weekday = currentDate.toLocaleString('en-US', { weekday: 'long' });
-const month = currentDate.toLocaleString('en-US', { month: 'long' });
-const dayOfMonth = currentDate.getDate();
-const year = currentDate.getFullYear();
-const time = currentDate.toLocaleTimeString();
+const weekday = currentDate.toLocaleString('en-US', { weekday: 'long' })
+const month = currentDate.toLocaleString('en-US', { month: 'long' })
+const dayOfMonth = currentDate.getDate()
+const year = currentDate.getFullYear()
+const time = currentDate.toLocaleTimeString()
 
 //FETCHES "HOME" PAGE
 app.get('/', (request, response) => {
@@ -29,16 +31,16 @@ app.get('/', (request, response) => {
 //FETCHES INFO PAGE
 app.get('/info', async (request, response) => {
   try {
-    const personCount = await Person.countDocuments({});
+    const personCount = await Person.countDocuments({})
     response.send(`
       <p>Phonebook has info for ${personCount} people</p> 
       <p>${weekday} ${month} ${dayOfMonth} ${year} ${time}</p>
-    `);
+    `)
   } catch (error) {
-    console.error(error);
-    response.status(500).send('Internal Server Error');
+    console.error(error)
+    response.status(500).send('Internal Server Error')
   }
-});
+})
 
 
 //FETCHES ALL RESOURCES

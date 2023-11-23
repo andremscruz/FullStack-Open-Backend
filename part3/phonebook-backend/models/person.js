@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
 const mongoose = require('mongoose')
 
 mongoose.set('strictQuery', false)
